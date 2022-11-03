@@ -35,7 +35,11 @@ def change_phone_funk(data):
 
 @input_error
 def find_phone(value):
-    return contacts.search(value.strip()).get_info()
+    records = contacts.search(value.strip())
+    records_str = ""
+    for record in records:
+        records_str += f"{record.get_info()}\n"
+    return records_str
 
 
 @input_error

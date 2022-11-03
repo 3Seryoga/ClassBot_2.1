@@ -121,14 +121,20 @@ class AddressBook(UserDict):
         del self.data[name]
 
     def search(self, value):
-        if self.has_record(value):
-            return self.get_record(value)
+        records_result = []
 
         for record in self.get_all_records().values():
+            if value in record.name.value:
+                records_result.append(record)
+                continue
+
             for phone in record.phones:
-                if phone.value == value:
-                    return record
-        raise ValueError("Міскузі")
+                if value in phone.value:
+                    records_result.append(record)
+
+        if not records_result:
+            raise ValueError("Міскузі")
+        return records_result
 
     def iterator(self, count=5):
         page = []
